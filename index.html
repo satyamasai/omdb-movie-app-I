@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+background: linear-gradient(to left, rgb(95, 95, 221), rgb(247, 8, 48));
+        }
+        #container{
+            width: 30%;
+            height: 600px;
+            /* border: 1px solid red; */
+            border-radius: 10px;
+            margin: auto;
+            /* display: grid; */
+            text-align: center;
+            background-color: pink;
+            line-height: 15px;
+        }
+        #container>img{
+            border-radius: 10px;
+            width: 100%;
+            height: 70%;
+        }
+        #movie{
+            margin-left: 40%;
+            width: 200px;
+            height: 25px;
+            border: 2px solid red;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        #movie:hover{
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    
+<input id="movie" type="text" placeholder="Enter movie name">
+<button onclick="getData()" id="search">Search</button>
+<div id="container">
+
+
+</div>
+
+</body>
+</html>
+<script>
+   
+    //console.log(title);
+   
+    //console.log(url)
+
+  async function getData() {
+    var title= document.getElementById("movie").value
+    const url= "http://www.omdbapi.com/?t="+title+"&apikey=2e98b7fb";
+      console.log("checked");
+        try{
+            let res= await fetch(url);
+            let data = await res.json();
+           // append(users.data)
+           console.log(data);
+            apend(data);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+    
+
+function apend(data){
+    var div=document.getElementById("container")
+    div.innerHTML=null;
+    var img= document.createElement("img")
+    img.src=data.Poster
+    var movie_name=document.createElement("h2")
+   movie_name.innerText=data.Title
+   movie_name.style.color="red"
+   var Released = document.createElement("p")
+   Released.innerText=data.Released
+   var imdbRating= document.createElement("p")
+   imdbRating.innerText=data.imdbRating
+   var plot= document.createElement("p")
+   plot.innerText=data.Plot
+    div.append(img,movie_name,Released,imdbRating,plot)
+}
+
+</script>
